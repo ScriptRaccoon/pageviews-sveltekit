@@ -1,0 +1,28 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #111215;
+	color: #eee;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 1.5;
+	padding-bottom: 2rem;
+}
+
+h1 {
+	text-align: center;
+	font-weight: 500;
+	margin-bottom: 1rem;
+}
+
+p {
+	margin-block: 1rem;
+}
+
+a {
+	color: inherit;
+	text-underline-offset: 2px;
+}
