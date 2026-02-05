@@ -24,7 +24,21 @@ function is_valid_body(body: unknown): body is { path: string } {
 	)
 }
 
+function is_same_origin(request: Request, site_origin: string): boolean {
+	const origin = request.headers.get('origin')
+	const referer = request.headers.get('referer')
+
+	if (origin !== null) return origin === site_origin
+	if (referer !== null) return referer.startsWith(site_origin)
+
+	return false
+}
+
 export const POST: RequestHandler = async (event) => {
+	if (!is_same_origin(event.request, event.url.origin)) {
+		return json({ error: 'Forbidden' }, { status: 403 })
+	}
+
 	const ua = event.request.headers.get('user-agent') ?? ''
 	if (CrawlerDetector.isCrawler(ua)) {
 		return json({ error: 'Crawler detected' }, { status: 403 })
