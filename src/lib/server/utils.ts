@@ -1,4 +1,12 @@
 /**
+ * Returns the current month in the format YYYY-MM.
+ */
+export function get_current_month(): string {
+	const today = new Date()
+	return today.toISOString().substring(0, 7)
+}
+
+/**
  * Adds a month for a date string in the format YYYY-MM.
  * For example: 2025-06 ---> 2025-07
  */

@@ -1,6 +1,7 @@
 import type { RequestEvent } from '@sveltejs/kit'
 import { Crawler } from 'es6-crawler-detect'
 import { db } from './db'
+import { get_current_month } from './utils'
 
 const CrawlerDetector = new Crawler()
 
@@ -24,8 +25,7 @@ export async function save_visit(event: RequestEvent) {
 	const cache_key = `${session_id}:${path}`
 	if (visits_cache.has(cache_key)) return
 
-	const today = new Date()
-	const month = today.toISOString().substring(0, 7) // YYYY-MM
+	const month = get_current_month()
 
 	const sql = `
 		INSERT INTO page_stats
@@ -44,5 +44,6 @@ export async function save_visit(event: RequestEvent) {
 		return
 	}
 
-	visits_cache.set(cache_key, Date.now() + 1000 * 60 * 60) // 1h
+	const expires_at = Date.now() + 1000 * 60 * 60 // 1h
+	visits_cache.set(cache_key, expires_at)
 }
