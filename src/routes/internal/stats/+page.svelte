@@ -20,7 +20,7 @@
 
 <style>
 	.path {
-		color: yellow;
+		color: var(--accent-color);
 	}
 
 	section {
@@ -30,7 +30,7 @@
 
 	.total {
 		font-size: 1.5rem;
-		color: skyblue;
+		color: var(--bar-color);
 	}
 
 	.total-para {

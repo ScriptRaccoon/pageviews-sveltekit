@@ -4,9 +4,19 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--bg-color: #111215;
+	--font-color: #fff;
+	--secondary-font-color: #bbb;
+	--outline-color: #555;
+	--secondary-bg-color: #222;
+	--accent-color: yellow;
+	--bar-color: skyblue;
+}
+
 body {
-	background-color: #111215;
-	color: #fff;
+	background-color: var(--bg-color);
+	color: var(--font-color);
 	font-family:
 		system-ui,
 		-apple-system,
@@ -49,6 +59,10 @@ summary {
 }
 
 :is(a, summary, input, button):focus-visible {
-	outline: 1px solid currentColor;
+	outline: 1px solid var(--font-color);
 	outline-offset: 2px;
+}
+
+.secondary {
+	color: var(--secondary-font-color);
 }

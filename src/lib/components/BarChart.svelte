@@ -49,7 +49,7 @@
 	.bar {
 		width: 1rem;
 		height: calc(100% * var(--value) / var(--max-value));
-		background-color: skyblue;
+		background-color: var(--bar-color);
 	}
 
 	details {
@@ -59,7 +59,7 @@
 
 	summary {
 		width: fit-content;
-		color: #bbb;
+		color: var(--secondary-font-color);
 	}
 
 	table {
@@ -77,12 +77,12 @@
 
 	th,
 	td {
-		border: 1px solid #555;
+		border: 1px solid var(--outline-color);
 		padding: 0.25rem 0.5rem;
 	}
 
 	th,
 	tr:nth-child(2n) {
-		background-color: #222;
+		background-color: var(--secondary-bg-color);
 	}
 </style>

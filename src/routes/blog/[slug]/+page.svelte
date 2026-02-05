@@ -26,4 +26,4 @@
 	molestias et veritatis mollitia consequatur.
 </p>
 
-<a href="/blog">All posts</a>
+<a class="secondary" href="/blog">All posts</a>
