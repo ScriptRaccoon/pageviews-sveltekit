@@ -3,6 +3,8 @@ import type { PageServerLoad } from './$types'
 import { db } from '$lib/server/db'
 import { add_month } from '$lib/server/utils'
 
+export const prerender = false
+
 const sql_stats = `
 	SELECT path, month, visits
 	FROM page_stats

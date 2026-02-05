@@ -1,0 +1,77 @@
+import { json, type RequestHandler } from '@sveltejs/kit'
+import { Crawler } from 'es6-crawler-detect'
+import { get_current_month } from '$lib/server/utils'
+import { db } from '$lib/server/db'
+import { UNTRACKED_PATHS } from '$lib/server/config'
+
+const CrawlerDetector = new Crawler()
+
+const visits_cache: Map<string, number> = new Map()
+
+function clean_cache() {
+	const now = Date.now()
+	for (const [key, expires_at] of visits_cache.entries()) {
+		if (expires_at <= now) visits_cache.delete(key)
+	}
+}
+
+function is_valid_body(body: unknown): body is { path: string } {
+	return (
+		typeof body === 'object' &&
+		body !== null &&
+		'path' in body &&
+		typeof body.path === 'string'
+	)
+}
+
+export const POST: RequestHandler = async (event) => {
+	const ua = event.request.headers.get('user-agent') ?? ''
+	if (CrawlerDetector.isCrawler(ua)) {
+		return json({ error: 'Crawler detected' }, { status: 403 })
+	}
+
+	const body: unknown = await event.request.json()
+
+	if (!is_valid_body(body)) {
+		return json({ error: 'Invalid request body' }, { status: 400 })
+	}
+
+	const { path } = body
+
+	if (UNTRACKED_PATHS.some((p) => path.startsWith(p))) {
+		return json({ error: 'Invalid path' }, { status: 403 })
+	}
+
+	const session_id = event.locals.session_id
+
+	clean_cache()
+
+	const cache_key = `${session_id}:${path}`
+	if (visits_cache.has(cache_key)) {
+		return json({ message: 'Page visit has been tracked before' })
+	}
+
+	const month = get_current_month()
+
+	const sql = `
+        INSERT INTO page_stats
+            (path, month, visits)
+        VALUES
+            (?, ?, 1)
+        ON CONFLICT (path, month)
+            DO UPDATE SET visits = visits + 1`
+
+	const args = [path, month]
+
+	try {
+		await db.execute(sql, args)
+	} catch (err) {
+		console.error(err)
+		return json({ error: 'Database error' }, { status: 500 })
+	}
+
+	const expires_at = Date.now() + 1000 * 60 * 60 // 1h
+	visits_cache.set(cache_key, expires_at)
+
+	return json({ message: 'Page visit has been tracked successfully' })
+}
