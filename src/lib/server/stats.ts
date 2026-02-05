@@ -4,20 +4,28 @@ import { db } from './db'
 
 const CrawlerDetector = new Crawler()
 
-const visits_cache: Map<string, Set<string>> = new Map()
+const visits_cache: Map<string, number> = new Map()
+
+function clean_cache() {
+	const now = Date.now()
+	for (const [key, expires_at] of visits_cache.entries()) {
+		if (expires_at <= now) visits_cache.delete(key)
+	}
+}
 
 export async function save_visit(event: RequestEvent) {
 	const ua = event.request.headers.get('user-agent') ?? ''
 	if (CrawlerDetector.isCrawler(ua)) return
 
 	const path = event.url.pathname
-
 	const session_id = event.locals.session_id
-	const cache_entry = visits_cache.get(session_id) ?? new Set()
-	if (cache_entry.has(path)) return
 
-	const now = new Date()
-	const month = now.toISOString().substring(0, 7) // YYYY-MM
+	clean_cache()
+	const cache_key = `${session_id}:${path}`
+	if (visits_cache.has(cache_key)) return
+
+	const today = new Date()
+	const month = today.toISOString().substring(0, 7) // YYYY-MM
 
 	const sql = `
 		INSERT INTO page_stats
@@ -36,8 +44,7 @@ export async function save_visit(event: RequestEvent) {
 		return
 	}
 
-	cache_entry.add(path)
-	visits_cache.set(session_id, cache_entry)
+	visits_cache.set(cache_key, Date.now() + 1000 * 60 * 60) // 1h
 }
 
 export async function get_stats() {
