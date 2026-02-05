@@ -59,7 +59,7 @@ export const load: PageServerLoad = async () => {
 			.map(([path, rest]) => ({ path, ...rest }))
 			.sort((a, b) => b.total - a.total)
 
-		return { paths, month_list }
+		return { paths }
 	} catch (err) {
 		console.error(err)
 		error(500, 'Could not load stats')

@@ -6,4 +6,14 @@
 	<h1>Page Stats</h1>
 </header>
 
-<pre>{JSON.stringify(data, null, 4)}</pre>
+{#each data.paths as { path, total, monthly } (path)}
+	<h2>Path: {path}</h2>
+
+	<p>Total visits: {total}</p>
+
+	<p>Monthly visits:</p>
+
+	{#each Object.entries(monthly) as [month, visits]}
+		<div><strong>{month}:</strong> {visits}</div>
+	{/each}
+{/each}
