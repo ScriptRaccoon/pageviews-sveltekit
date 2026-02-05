@@ -70,6 +70,10 @@ export async function get_stats() {
 			total_visits: number
 		}[]
 
+		const visits_total_dict = Object.fromEntries(
+			visits_total.map((obj) => [obj.path, obj.total_visits]),
+		)
+
 		const paths = visits_total.map((obj) => obj.path)
 
 		const visits_monthly_ungrouped = res_months.rows as unknown as {
@@ -86,6 +90,8 @@ export async function get_stats() {
 		}
 
 		const visits_monthly = Object.entries(visits_monthly_grouped)
+
+		visits_monthly.sort((a, b) => visits_total_dict[b[0]] - visits_total_dict[a[0]])
 
 		return { paths, visits_total, visits_monthly }
 	} catch (err) {
