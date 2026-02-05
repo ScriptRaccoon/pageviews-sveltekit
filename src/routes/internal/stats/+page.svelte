@@ -1,4 +1,6 @@
 <script lang="ts">
+	import BarChart from '$lib/components/BarChart.svelte'
+
 	let { data } = $props()
 </script>
 
@@ -7,13 +9,31 @@
 </header>
 
 {#each data.paths as { path, total, monthly } (path)}
-	<h2>Path: {path}</h2>
+	<section>
+		<h2 class="path">{path}</h2>
 
-	<p>Total visits: {total}</p>
+		<p class="total-para"><span class="total">{total}</span> total visits</p>
 
-	<p>Monthly visits:</p>
-
-	{#each Object.entries(monthly) as [month, visits]}
-		<div><strong>{month}:</strong> {visits}</div>
-	{/each}
+		<BarChart data={monthly} />
+	</section>
 {/each}
+
+<style>
+	.path {
+		color: yellow;
+	}
+
+	section {
+		border-bottom: 1px solid #333;
+		padding-block: 1rem;
+	}
+
+	.total {
+		font-size: 1.5rem;
+		color: skyblue;
+	}
+
+	.total-para {
+		margin-bottom: 2rem;
+	}
+</style>

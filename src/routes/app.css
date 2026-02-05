@@ -34,14 +34,6 @@ h1 {
 	margin-bottom: 1rem;
 }
 
-h2 {
-	margin-block: 1rem 0.5rem;
-}
-
-h3 {
-	margin-block: 0.5rem 0.25rem;
-}
-
 p {
 	margin-block: 1rem;
 	text-wrap: pretty;
@@ -52,7 +44,11 @@ a {
 	text-underline-offset: 2px;
 }
 
-a:focus-visible {
+summary {
+	cursor: pointer;
+}
+
+:is(a, summary, input, button):focus-visible {
 	outline: 1px solid currentColor;
 	outline-offset: 2px;
 }

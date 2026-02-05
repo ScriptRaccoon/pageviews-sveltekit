@@ -56,7 +56,11 @@ export const load: PageServerLoad = async () => {
 		}
 
 		const paths = Object.entries(paths_rec)
-			.map(([path, rest]) => ({ path, ...rest }))
+			.map(([path, { total, monthly }]) => ({
+				path,
+				total,
+				monthly: Object.entries(monthly),
+			}))
 			.sort((a, b) => b.total - a.total)
 
 		return { paths }
