@@ -1,4 +1,4 @@
 /**
- * List of path segments whose visits are not tracked.
+ * List of paths whose visits will be tracked.
  */
-export const UNTRACKED_PATHS = ['/internal']
+export const TRACKED_PATHS = ['/', '/about', '/blog', '/blog/*']

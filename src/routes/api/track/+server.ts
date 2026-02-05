@@ -2,7 +2,7 @@ import { json, type RequestHandler } from '@sveltejs/kit'
 import { Crawler } from 'es6-crawler-detect'
 import { get_current_month } from '$lib/server/utils'
 import { db } from '$lib/server/db'
-import { UNTRACKED_PATHS } from '$lib/server/config'
+import { TRACKED_PATHS } from '$lib/server/config'
 
 const CrawlerDetector = new Crawler()
 
@@ -57,7 +57,13 @@ export const POST: RequestHandler = async (event) => {
 
 	const { path } = body
 
-	if (UNTRACKED_PATHS.some((p) => path.startsWith(p))) {
+	const trackable =
+		TRACKED_PATHS.includes(path) ||
+		TRACKED_PATHS.some(
+			(p) => p.endsWith('*') && path.startsWith(p.substring(0, p.length - 1)),
+		)
+
+	if (!trackable) {
 		return json({ error: 'Forbidden' }, { status: 403 })
 	}
 

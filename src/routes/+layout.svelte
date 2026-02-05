@@ -1,26 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/state'
+	import { track_visit } from '$lib/client/track'
 	import Nav from '$lib/components/Nav.svelte'
 	import './app.css'
 
 	let { data, children } = $props()
 
-	async function send_visit(path: string) {
-		if (data.untracked_paths.some((p) => path.startsWith(p))) return
-
-		try {
-			await fetch('/api/visit', {
-				method: 'POST',
-				body: JSON.stringify({ path }),
-				headers: { 'Content-Type': 'application/json' },
-			})
-		} catch (err) {
-			console.error(err)
-		}
-	}
-
 	$effect(() => {
-		send_visit(page.url.pathname)
+		track_visit(page.url.pathname, data.tracked_paths)
 	})
 </script>
 
