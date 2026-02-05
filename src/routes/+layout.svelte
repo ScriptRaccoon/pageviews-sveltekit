@@ -9,7 +9,11 @@
 		if (data.untracked_paths.some((p) => path.startsWith(p))) return
 
 		try {
-			await fetch('/api/visit', { method: 'POST', body: JSON.stringify({ path }) })
+			await fetch('/api/visit', {
+				method: 'POST',
+				body: JSON.stringify({ path }),
+				headers: { 'Content-Type': 'application/json' },
+			})
 		} catch (err) {
 			console.error(err)
 		}

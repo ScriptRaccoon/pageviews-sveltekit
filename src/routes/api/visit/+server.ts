@@ -41,7 +41,12 @@ export const POST: RequestHandler = async (event) => {
 
 	const ua = event.request.headers.get('user-agent') ?? ''
 	if (CrawlerDetector.isCrawler(ua)) {
-		return json({ error: 'Crawler detected' }, { status: 403 })
+		return json({ error: 'Forbiddden' }, { status: 403 })
+	}
+
+	const content_type = event.request.headers.get('Content-Type')
+	if (content_type !== 'application/json') {
+		return json({ error: 'Forbiddden' }, { status: 403 })
 	}
 
 	const body: unknown = await event.request.json()
@@ -53,7 +58,7 @@ export const POST: RequestHandler = async (event) => {
 	const { path } = body
 
 	if (UNTRACKED_PATHS.some((p) => path.startsWith(p))) {
-		return json({ error: 'Invalid path' }, { status: 403 })
+		return json({ error: 'Forbidden' }, { status: 403 })
 	}
 
 	const session_id = event.locals.session_id
