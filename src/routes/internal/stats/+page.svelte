@@ -32,14 +32,6 @@
 </main>
 
 <style>
-	h2 {
-		margin-block: 1rem 0.5rem;
-	}
-
-	h3 {
-		margin-block: 0.5rem;
-	}
-
 	.path {
 		color: yellow;
 	}

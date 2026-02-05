@@ -6,6 +6,8 @@
 	<h1>Blog</h1>
 </header>
 
+<p>This is a list of mock blog posts whose visits are tracked as well.</p>
+
 <ol>
 	{#each SLUGS as slug}
 		<li>
