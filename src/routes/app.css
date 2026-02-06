@@ -12,6 +12,7 @@
 	--secondary-bg-color: #222;
 	--accent-color: yellow;
 	--bar-color: skyblue;
+	--button-color: orangered;
 }
 
 body {
@@ -58,6 +59,17 @@ summary {
 	cursor: pointer;
 }
 
+button {
+	color: inherit;
+	font: inherit;
+	background: none;
+	border: none;
+}
+
+button:not(:disabled) {
+	cursor: pointer;
+}
+
 :is(a, summary, input, button):focus-visible {
 	outline: 1px solid var(--font-color);
 	outline-offset: 2px;
@@ -65,4 +77,10 @@ summary {
 
 .secondary {
 	color: var(--secondary-font-color);
+}
+
+.button {
+	background-color: var(--button-color);
+	padding: 0.25rem 1rem;
+	border-radius: 0.25rem;
 }
