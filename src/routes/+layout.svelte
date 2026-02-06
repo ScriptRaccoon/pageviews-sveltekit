@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>Page Stats Demo</title>
+	<title>Page Stats with SvelteKit</title>
 </svelte:head>
 
 <Nav />

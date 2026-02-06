@@ -1,5 +1,5 @@
 {
-	"name": "page-stats-demo",
+	"name": "page-stats-sveltekit",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
