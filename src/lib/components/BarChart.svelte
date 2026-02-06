@@ -10,8 +10,12 @@
 
 {#if data.length}
 	<div class="chart">
-		{#each data as [_, value]}
-			<div class="bar" style:--value={value} style:--max-value={max_value}></div>
+		{#each data as [month, value]}
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+			<div class="bar" style:--value={value} style:--max-value={max_value} tabindex="0">
+				<span class="value">{value}</span>
+				<span class="month">{month}</span>
+			</div>
 		{/each}
 	</div>
 
@@ -50,6 +54,33 @@
 		width: 1rem;
 		height: calc(100% * var(--value) / var(--max-value));
 		background-color: var(--bar-color);
+		position: relative;
+		font-family: monospace;
+		font-size: 0.875rem;
+		text-wrap: nowrap;
+	}
+
+	.value {
+		position: absolute;
+		bottom: 100%;
+		opacity: 0;
+	}
+
+	.month {
+		position: absolute;
+		top: 100%;
+		opacity: 0;
+	}
+
+	.bar:hover,
+	.bar:focus-visible {
+		outline: none;
+		background-color: var(--accent-color);
+
+		.value,
+		.month {
+			opacity: 1;
+		}
 	}
 
 	details {
