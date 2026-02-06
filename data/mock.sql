@@ -67,3 +67,36 @@ VALUES
     ("/blog", "2025-10", 19),
     ("/blog", "2025-11", 14),
     ("/blog", "2025-12", 12) ON CONFLICT DO NOTHING;
+
+INSERT INTO
+    page_stats (path, month, visits)
+VALUES
+    ("/blog/banana", "2024-09", 1),
+    ("/blog/banana", "2024-10", 2),
+    ("/blog/banana", "2024-11", 3),
+    ("/blog/banana", "2024-12", 4),
+    ("/blog/banana", "2025-01", 4),
+    ("/blog/banana", "2025-02", 3),
+    ("/blog/banana", "2025-03", 6),
+    ("/blog/banana", "2025-04", 3),
+    ("/blog/banana", "2025-05", 2),
+    ("/blog/banana", "2025-06", 10),
+    ("/blog/banana", "2025-07", 15),
+    ("/blog/banana", "2025-08", 21),
+    ("/blog/banana", "2025-09", 19),
+    ("/blog/banana", "2025-10", 20),
+    ("/blog/banana", "2025-11", 21),
+    ("/blog/banana", "2025-12", 25) ON CONFLICT DO NOTHING;
+
+INSERT INTO
+    page_stats (path, month, visits)
+VALUES
+    ("/blog/strawberry", "2025-04", 10),
+    ("/blog/strawberry", "2025-05", 8),
+    ("/blog/strawberry", "2025-06", 7),
+    ("/blog/strawberry", "2025-07", 6),
+    ("/blog/strawberry", "2025-08", 7),
+    ("/blog/strawberry", "2025-09", 4),
+    ("/blog/strawberry", "2025-10", 2),
+    ("/blog/strawberry", "2025-11", 1),
+    ("/blog/strawberry", "2025-12", 5) ON CONFLICT DO NOTHING;
