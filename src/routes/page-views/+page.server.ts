@@ -43,25 +43,28 @@ export const load: PageServerLoad = async () => {
 			views: number
 		}[]
 
-		type PathsRec = Record<string, { total: number; monthly: Record<string, number> }>
+		type PathsRec = Record<
+			string,
+			{ total: number; monthly_views: Record<string, number> }
+		>
 
 		const paths_rec: PathsRec = {}
 
 		for (const { path, month, views } of rows) {
 			paths_rec[path] ??= {
 				total: 0,
-				monthly: Object.fromEntries(month_list.map((m) => [m, 0])),
+				monthly_views: Object.fromEntries(month_list.map((m) => [m, 0])),
 			}
 
 			paths_rec[path].total += views
-			paths_rec[path].monthly[month] = views
+			paths_rec[path].monthly_views[month] = views
 		}
 
 		const paths = Object.entries(paths_rec)
-			.map(([path, { total, monthly }]) => ({
+			.map(([path, { total, monthly_views }]) => ({
 				path,
 				total,
-				monthly: Object.entries(monthly),
+				monthly_views: Object.entries(monthly_views),
 			}))
 			.sort((a, b) => b.total - a.total)
 

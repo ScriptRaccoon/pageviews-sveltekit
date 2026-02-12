@@ -1,46 +1,22 @@
 <script lang="ts">
 	type Props = {
-		data: [string, number][]
+		data_points: [string, number][]
 	}
 
-	let { data }: Props = $props()
+	let { data_points }: Props = $props()
 
-	let max_value = $derived(Math.max(...data.map((x) => x[1])))
+	let max_value = $derived(Math.max(...data_points.map((x) => x[1])))
 </script>
 
-{#if data.length}
-	<div class="chart">
-		{#each data as [month, value]}
-			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-			<div class="bar" style:--value={value} style:--max-value={max_value} tabindex="0">
-				<span class="value">{value}</span>
-				<span class="month">{month}</span>
-			</div>
-		{/each}
-	</div>
-
-	<details>
-		<summary>Show details</summary>
-		<table>
-			<thead>
-				<tr>
-					<th>Month </th>
-					<th>Views</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each data as [label, value]}
-					<tr>
-						<td>{label}</td>
-						<td>{value}</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
-	</details>
-{:else}
-	<p>No data</p>
-{/if}
+<div class="chart">
+	{#each data_points as [label, value]}
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+		<div class="bar" style:--value={value} style:--max-value={max_value} tabindex="0">
+			<span class="value">{value}</span>
+			<span class="label">{label}</span>
+		</div>
+	{/each}
+</div>
 
 <style>
 	.chart {
@@ -66,7 +42,7 @@
 		opacity: 0;
 	}
 
-	.month {
+	.label {
 		position: absolute;
 		top: 100%;
 		opacity: 0;
@@ -77,43 +53,9 @@
 		outline: none;
 		background-color: var(--accent-color);
 
-		.value,
-		.month {
+		.label,
+		.value {
 			opacity: 1;
 		}
-	}
-
-	details {
-		margin-top: 1rem;
-		font-size: 0.875rem;
-	}
-
-	summary {
-		width: fit-content;
-		color: var(--secondary-font-color);
-	}
-
-	table {
-		border-collapse: collapse;
-		margin-block: 1rem;
-	}
-
-	tbody {
-		font-family: monospace;
-	}
-
-	th {
-		text-align: left;
-	}
-
-	th,
-	td {
-		border: 1px solid var(--outline-color);
-		padding: 0.25rem 0.5rem;
-	}
-
-	th,
-	tr:nth-child(2n) {
-		background-color: var(--secondary-bg-color);
 	}
 </style>
