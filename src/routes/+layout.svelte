@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { page } from '$app/state'
-	import { track_visit } from '$lib/client/track'
+	import { track_view } from '$lib/client/track'
 	import Nav from '$lib/components/Nav.svelte'
 	import './app.css'
 
 	let { data, children } = $props()
 
 	$effect(() => {
-		track_visit(page.url.pathname, data.tracked_paths)
+		track_view(page.url.pathname, data.tracked_paths)
 	})
 </script>
 
 <svelte:head>
-	<title>Page Stats with SvelteKit</title>
+	<title>Page Views with SvelteKit</title>
 </svelte:head>
 
 <Nav />

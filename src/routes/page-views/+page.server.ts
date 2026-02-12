@@ -5,21 +5,21 @@ import { add_month } from '$lib/server/utils'
 
 export const prerender = false
 
-const sql_stats = `
-	SELECT path, month, visits
-	FROM page_stats
+const sql_views = `
+	SELECT path, month, views
+	FROM page_views
 	ORDER BY path, month`
 
 const sql_month_range = `
 	SELECT
 		MIN(month) as min_month,
 		MAX(month) as max_month
-	FROM page_stats`
+	FROM page_views`
 
 export const load: PageServerLoad = async () => {
 	try {
-		const [res_stats, res_month_range] = await db.batch([
-			{ sql: sql_stats },
+		const [res_views, res_month_range] = await db.batch([
+			{ sql: sql_views },
 			{ sql: sql_month_range },
 		])
 
@@ -37,24 +37,24 @@ export const load: PageServerLoad = async () => {
 			}
 		}
 
-		const rows = res_stats.rows as unknown as {
+		const rows = res_views.rows as unknown as {
 			path: string
 			month: string
-			visits: number
+			views: number
 		}[]
 
 		type PathsRec = Record<string, { total: number; monthly: Record<string, number> }>
 
 		const paths_rec: PathsRec = {}
 
-		for (const { path, month, visits } of rows) {
+		for (const { path, month, views } of rows) {
 			paths_rec[path] ??= {
 				total: 0,
 				monthly: Object.fromEntries(month_list.map((m) => [m, 0])),
 			}
 
-			paths_rec[path].total += visits
-			paths_rec[path].monthly[month] = visits
+			paths_rec[path].total += views
+			paths_rec[path].monthly[month] = views
 		}
 
 		const paths = Object.entries(paths_rec)
@@ -68,6 +68,6 @@ export const load: PageServerLoad = async () => {
 		return { paths }
 	} catch (err) {
 		console.error(err)
-		error(500, 'Could not load stats')
+		error(500, 'Could not load page views')
 	}
 }

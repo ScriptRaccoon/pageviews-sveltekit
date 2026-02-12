@@ -25,14 +25,14 @@
 </script>
 
 <header>
-	<h1>Page Stats</h1>
+	<h1>Page Views</h1>
 </header>
 
 {#each data.paths as { path, total, monthly } (path)}
 	<section>
 		<h2 class="path">{path}</h2>
 
-		<p class="total-para"><span class="total">{total}</span> total visits</p>
+		<p class="total-para"><span class="total">{total}</span> views in total</p>
 
 		<BarChart data={monthly} />
 	</section>

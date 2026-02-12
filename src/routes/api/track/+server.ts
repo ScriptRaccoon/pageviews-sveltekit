@@ -6,12 +6,12 @@ import { TRACKED_PATHS } from '$lib/server/config'
 
 const CrawlerDetector = new Crawler()
 
-const visits_cache: Map<string, number> = new Map()
+const view_cache: Map<string, number> = new Map()
 
 function clean_cache() {
 	const now = Date.now()
-	for (const [key, expires_at] of visits_cache.entries()) {
-		if (expires_at <= now) visits_cache.delete(key)
+	for (const [key, expires_at] of view_cache.entries()) {
+		if (expires_at <= now) view_cache.delete(key)
 	}
 }
 
@@ -72,19 +72,19 @@ export const POST: RequestHandler = async (event) => {
 	clean_cache()
 
 	const cache_key = `${session_id}:${path}`
-	if (visits_cache.has(cache_key)) {
-		return json({ message: 'Page visit has been tracked before' })
+	if (view_cache.has(cache_key)) {
+		return json({ message: 'Page view has been tracked before' })
 	}
 
 	const month = get_current_month()
 
 	const sql = `
-        INSERT INTO page_stats
-            (path, month, visits)
+        INSERT INTO page_views
+            (path, month, views)
         VALUES
             (?, ?, 1)
         ON CONFLICT (path, month)
-            DO UPDATE SET visits = visits + 1`
+            DO UPDATE SET views = views + 1`
 
 	const args = [path, month]
 
@@ -96,7 +96,7 @@ export const POST: RequestHandler = async (event) => {
 	}
 
 	const expires_at = Date.now() + 1000 * 60 * 60 // 1h
-	visits_cache.set(cache_key, expires_at)
+	view_cache.set(cache_key, expires_at)
 
-	return json({ message: 'Page visit has been tracked successfully' })
+	return json({ message: 'Page view has been tracked successfully' })
 }

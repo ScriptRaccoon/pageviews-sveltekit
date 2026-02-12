@@ -25,7 +25,7 @@
 			<thead>
 				<tr>
 					<th>Month </th>
-					<th>Visits</th>
+					<th>Views</th>
 				</tr>
 			</thead>
 			<tbody>

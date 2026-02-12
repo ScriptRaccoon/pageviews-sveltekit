@@ -3,5 +3,5 @@
 </header>
 
 <main>
-	<p>This is a sample page whose visits are tracked.</p>
+	<p>This is a sample page whose views are tracked.</p>
 </main>

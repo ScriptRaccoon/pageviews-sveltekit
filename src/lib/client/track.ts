@@ -2,7 +2,7 @@ import { browser } from '$app/environment'
 
 export const NOTRACK_STORAGE_KEY = 'notrack'
 
-export async function track_visit(path: string, tracked_paths: string[]) {
+export async function track_view(path: string, tracked_paths: string[]) {
 	if (!browser || window.localStorage.getItem(NOTRACK_STORAGE_KEY)) {
 		return
 	}
