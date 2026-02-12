@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
 import { db } from '$lib/server/db'
 import { add_month } from '$lib/server/utils'
+import { PAGEVIEWS_CREDENTIALS } from '$env/static/private'
 
 export const prerender = false
 
@@ -16,7 +17,14 @@ const sql_month_range = `
 		MAX(month) as max_month
 	FROM page_views`
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	const auth_header = event.request.headers.get('authorization')
+
+	if (auth_header !== `Basic ${btoa(PAGEVIEWS_CREDENTIALS)}`) {
+		event.setHeaders({ 'WWW-Authenticate': 'Basic realm="Protected"' })
+		error(401, 'Unauthorized')
+	}
+
 	try {
 		const [res_views, res_month_range] = await db.batch([
 			{ sql: sql_views },
