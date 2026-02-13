@@ -1,6 +1,6 @@
 # Page Visits for SvelteKit apps
 
-This repository demonstrates how to track and visualize page visits in a SvelteKit application.
+This repository demonstrates how to track and visualize page visits in a SvelteKit application. It is also explained in the blog post [How to track page visits in SvelteKit](https://scriptraccoon.dev/blog/track-page-visits-sveltekit).
 
 When a page loads, a request is sent to `/api/track`, where the page view is stored in the database. A password-protected dashboard at `/page-visits` displays page visits over time.
 
