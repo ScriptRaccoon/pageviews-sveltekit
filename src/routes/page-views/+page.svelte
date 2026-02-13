@@ -3,6 +3,7 @@
 	import { NOTRACK_STORAGE_KEY } from '$lib/client/track'
 	import BarChart from '$lib/components/BarChart.svelte'
 	import DataTable from '$lib/components/DataTable.svelte'
+	import { Eye } from 'lucide-svelte'
 
 	let { data } = $props()
 
@@ -33,7 +34,10 @@
 	<section>
 		<h2 class="path">{path}</h2>
 
-		<p class="total-para"><span class="total">{total}</span> views in total</p>
+		<div aria-label="{total} views in total" class="total">
+			<Eye />
+			{total}
+		</div>
 
 		<BarChart data_points={monthly_views} />
 
@@ -62,18 +66,19 @@
 		color: var(--accent-color);
 	}
 
-	.total {
-		font-size: 1.5rem;
-		color: var(--bar-color);
+	h2 {
+		margin-bottom: 0.5rem;
 	}
 
-	.total-para {
-		margin-bottom: 2rem;
+	.total {
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
 	}
 
 	details {
 		margin-top: 1rem;
-		font-size: 0.875rem;
 	}
 
 	summary {
