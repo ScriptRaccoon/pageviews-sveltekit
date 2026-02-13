@@ -1,5 +1,5 @@
 INSERT INTO
-    page_views (path, month, views)
+    page_visits (path, month, visits)
 VALUES
     ("/", "2024-01", 8),
     ("/", "2024-02", 13),
@@ -28,7 +28,7 @@ VALUES
     ("/", "2025-12", 7) ON CONFLICT DO NOTHING;
 
 INSERT INTO
-    page_views (path, month, views)
+    page_visits (path, month, visits)
 VALUES
     ("/about", "2024-03", 2),
     ("/about", "2024-04", 12),
@@ -50,7 +50,7 @@ VALUES
     ("/about", "2025-12", 1) ON CONFLICT DO NOTHING;
 
 INSERT INTO
-    page_views (path, month, views)
+    page_visits (path, month, visits)
 VALUES
     ("/blog", "2024-01", 2),
     ("/blog", "2024-04", 1),
@@ -69,7 +69,7 @@ VALUES
     ("/blog", "2025-12", 12) ON CONFLICT DO NOTHING;
 
 INSERT INTO
-    page_views (path, month, views)
+    page_visits (path, month, visits)
 VALUES
     ("/blog/banana", "2024-09", 1),
     ("/blog/banana", "2024-10", 2),
@@ -89,7 +89,7 @@ VALUES
     ("/blog/banana", "2025-12", 25) ON CONFLICT DO NOTHING;
 
 INSERT INTO
-    page_views (path, month, views)
+    page_visits (path, month, visits)
 VALUES
     ("/blog/strawberry", "2025-04", 10),
     ("/blog/strawberry", "2025-05", 8),

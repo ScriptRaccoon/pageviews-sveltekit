@@ -10,7 +10,7 @@
 			<a href="/blog">Blog</a>
 		</li>
 		<li>
-			<a href="/page-views">Page Views</a>
+			<a href="/page-visits">Page Visits</a>
 		</li>
 	</ul>
 </nav>

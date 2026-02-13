@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>Page Views with SvelteKit</title>
+	<title>Page Visits with SvelteKit</title>
 </svelte:head>
 
 <Nav />
