@@ -12,8 +12,10 @@
 	{#each data_points as [label, value]}
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div class="bar" style:--value={value} style:--max-value={max_value} tabindex="0">
-			<span class="value">{value}</span>
-			<span class="label">{label}</span>
+			{#if value > 0}
+				<span class="value">{value}</span>
+				<span class="label">{label}</span>
+			{/if}
 		</div>
 	{/each}
 </div>
@@ -34,6 +36,17 @@
 		font-family: monospace;
 		font-size: 0.875rem;
 		text-wrap: nowrap;
+
+		&:hover,
+		&:focus-visible {
+			outline: none;
+			background-color: var(--accent-color);
+
+			.label,
+			.value {
+				opacity: 1;
+			}
+		}
 	}
 
 	.value {
@@ -46,16 +59,5 @@
 		position: absolute;
 		top: 100%;
 		opacity: 0;
-	}
-
-	.bar:hover,
-	.bar:focus-visible {
-		outline: none;
-		background-color: var(--accent-color);
-
-		.label,
-		.value {
-			opacity: 1;
-		}
 	}
 </style>
